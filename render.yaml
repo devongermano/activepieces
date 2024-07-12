@@ -1,0 +1,52 @@
+services:
+  - type: web
+    name: activepieces
+    env: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: AP_POSTGRES_DATABASE
+        fromSecret: AP_POSTGRES_DATABASE
+      - key: AP_POSTGRES_PASSWORD
+        fromSecret: AP_POSTGRES_PASSWORD
+      - key: AP_POSTGRES_USERNAME
+        fromSecret: AP_POSTGRES_USERNAME
+    envFilePath: .env
+    docker:
+      image: ghcr.io/activepieces/activepieces:0.29.1
+      container_name: activepieces
+      restart: unless-stopped
+      ports:
+        - '8080:80'
+      depends_on:
+        - postgres
+        - redis
+
+  - type: database
+    name: activepieces-postgres
+    plan: starter
+    databaseName: ${AP_POSTGRES_DATABASE}
+    user: ${AP_POSTGRES_USERNAME}
+    password: ${AP_POSTGRES_PASSWORD}
+    image: postgres:14.4
+    container_name: postgres
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  - type: redis
+    name: activepieces-redis
+    plan: starter
+    image: redis:7.0.7
+    container_name: redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+volumes:
+  - name: postgres_data
+    type: persistent
+
+  - name: redis_data
+    type: persistent
