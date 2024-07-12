@@ -37,6 +37,8 @@ databases:
   - name: activepieces-postgres
     plan: starter
     postgresMajorVersion: 14
+    databaseName: activepieces_db
+    user: activepieces_user
     ipAllowList: 
       - source: 0.0.0.0/0
         description: Allow all
