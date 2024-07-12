@@ -10,7 +10,7 @@ services:
       - key: AP_POSTGRES_DATABASE
         fromDatabase:
           name: activepieces-postgres
-          property: databaseName
+          property: database
       - key: AP_POSTGRES_PASSWORD
         fromDatabase:
           name: activepieces-postgres
@@ -37,7 +37,7 @@ databases:
   - name: activepieces-postgres
     plan: starter
     postgresMajorVersion: 14
-    databaseName: activepieces_db
+    database: activepieces_db
     user: activepieces_user
     ipAllowList: 
       - source: 0.0.0.0/0
