@@ -11,7 +11,7 @@ services:
       - key: AP_POSTGRES_DATABASE
         fromDatabase:
           name: activepieces-postgres
-          property: database
+          property: databaseName
       - key: AP_POSTGRES_PASSWORD
         fromDatabase:
           name: activepieces-postgres
@@ -41,9 +41,8 @@ databases:
   - name: activepieces-postgres
     plan: starter
     postgresMajorVersion: 14
-    databaseName: ${AP_POSTGRES_DATABASE}
-    user: ${AP_POSTGRES_USERNAME}
-    password: ${AP_POSTGRES_PASSWORD}
+    databaseName: activepieces_db
+    user: activepieces_user
     ipAllowList: 
       - source: 0.0.0.0/0
         description: Allow all
@@ -52,8 +51,8 @@ envVarGroups:
   - name: activepieces-env
     envVars:
       - key: AP_POSTGRES_DATABASE
-        sync: false
+        value: activepieces_db
       - key: AP_POSTGRES_PASSWORD
-        sync: false
+        value: yourpassword
       - key: AP_POSTGRES_USERNAME
-        sync: false
+        value: activepieces_user
