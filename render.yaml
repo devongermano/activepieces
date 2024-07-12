@@ -1,11 +1,10 @@
 services:
   - type: web
     name: activepieces
-    env: docker
     plan: starter
+    env: docker
     image:
       url: ghcr.io/activepieces/activepieces:0.29.1
-    dockerCommand: ""
     autoDeploy: true
     envVars:
       - key: AP_POSTGRES_DATABASE
@@ -25,9 +24,6 @@ services:
           name: activepieces-redis
           type: redis
           property: connectionString
-    ports:
-      - port: 8080
-        targetPort: 80
     healthCheckPath: /
 
   - type: redis
